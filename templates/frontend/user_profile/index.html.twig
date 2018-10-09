@@ -1,0 +1,32 @@
+{% extends 'frontend/panelbase.html.twig' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+{% block body %}
+
+<div class="uk-container panel">
+
+<div class="uk-margin-top">
+   {% include 'frontend/components/navigator.html.twig' %}
+</div>
+
+<div class="uk-margin"></div>
+
+ <div class="uk-section uk-section-small">
+
+ {% if is_granted('ROLE_ADMIN') %}
+  {% include 'panels/admin.html.twig' %}
+ {% elseif is_granted('ROLE_USER') %}
+  {% include 'panels/user.html.twig' %}
+  {% elseif is_granted('ROLE_CONTRIBUTOR') %}
+   {% include 'panels/contributor.html.twig' %}
+ {% endif %}
+
+ </div>
+
+</div>
+
+
+
+ {% endblock %}

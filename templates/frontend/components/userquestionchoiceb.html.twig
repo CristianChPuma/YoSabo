@@ -1,0 +1,20 @@
+{% for question in questions %}
+
+<div >
+
+   <div data-src="{{ asset('uploads/covers/' ~ question.question.cover) }}" uk-img class="uk-background-cover uk-border-rounded uk-box-shadow-hover-medium">
+
+     <div class="overlay-white">
+       <div class="uk-padding-small">
+         <p>¿{{ question.question.question }}?<p>
+
+         <p>
+
+         </p>
+       </div>
+     </div>
+   </div>
+
+</div>
+
+{% endfor %}

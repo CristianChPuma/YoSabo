@@ -1,0 +1,16 @@
+{% for question in questions %}
+
+ <a href="" uk-tooltip="{{ question.rewards }} puntos">
+
+  <div class="question-card-admin uk-background-default uk-border-rounded uk-padding-small uk-margin uk-box-shadow-hover-medium">
+
+    <h4>¿{{ question.question }}?</h4>
+
+    <p>
+      {{ question.explanation|length > 50 ? question.explanation|slice(0, 50) ~ '...' : question.explanation  }}
+    </p>
+  </div>
+
+</a>
+
+{% endfor %}

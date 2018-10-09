@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %} - Yo Sabo</title>
+        {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700,800,900|Quicksand:300,400,500,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.16/css/uikit.min.css">
+              <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+              <link rel="icon" href="{{ asset('assets/components/logofv.png') }}">
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+                      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+                              <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.16/js/uikit.min.js" charset="utf-8"></script>
+        {% endblock %}
+    </head>
+    <body>
+
+
+        <div class="content-body uk-height-viewport background-gradient-primary uk-overflow-hidden">
+          <div class="animated-bg" data-src="{{ asset('assets/components/pattern.png') }}" uk-img>
+
+            <div>
+              {% block body %} {% endblock %}
+            </div>
+
+          </div>
+        </div>
+        <div id="loader">
+          <div uk-spinner class="spinner-color-a uk-position-center"></div>
+        </div>
+
+        {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.16/js/uikit-icons.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+        <script src="https://unpkg.com/scrollreveal"></script>
+           <script src="{{ asset('build/app.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

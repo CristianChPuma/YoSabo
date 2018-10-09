@@ -1,0 +1,128 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+
+{% block navbar %} <div class="uk-container uk-container-small"> {% include 'frontend/components/navigator.html.twig' %} </div> {% endblock %}
+
+{% block content %}
+
+
+<div class="uk-container uk-container-small">
+
+  <div class="tm-section-smallest">
+
+    {% if question != "" %}
+
+  {% include 'frontend/components/question.html.twig' with { "question" : question }  %}
+
+  {% else %}
+
+    <div class="uk-text-center">
+          <p>No hay preguntas. Vuelve después</p>
+    </div>
+
+  {% endif %}
+
+  </div>
+
+</div>
+
+<script>
+
+$('.question-choice').click(function(){
+
+     var points = $(this).data('points');
+     var questionid = $(this).data('questionid');
+     var isright = $(this).data('isright');
+
+     console.log(isright);
+
+     $.ajax({
+        type: 'post',
+        url: '{{ path('sum-points') }}',
+        dataType: "json",
+       data: {
+          "questionpoints" : points,
+          "questionid" : questionid,
+          "isright" : isright
+        },
+        async: true,
+        success: function(data) {
+
+        console.log(data.isright);
+
+         if(data.isright === 'true'){
+
+           UIkit.notification({
+             message: 'Ganaste ' + data.points +' puntos',
+             status: 'success',
+             pos: 'bottom-center',
+             timeout: 2000
+          });
+        }else{
+          UIkit.notification({
+            message: 'Fallaste',
+            status: 'danger',
+            pos: 'bottom-center',
+            timeout: 2000
+         });
+        }
+
+
+               UIkit.modal('#question-result').show();
+
+        },
+        error: function(){
+
+          UIkit.notification({
+            message: 'Hubo un error al intentar crear el usuario',
+            status: 'danger',
+            pos: 'bottomm-center',
+            timeout: 2000
+         });
+
+        }
+
+
+      });
+
+
+});
+
+</script>
+
+
+{% endblock %}
+
+{% block ad %}
+
+<div class="uk-container uk-container-small">
+
+  <div class="uk-height-1-1 uk-width-1-1 uk-background-cover" data-src="{{ asset('https://www.g2easia.com/RXCH/RXCH_G2EAsia_V2/image/homepage/VR-banner.gif?v=636591144957838640') }}" uk-img>
+
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block modal %}
+
+
+    {% if question != "" %}
+
+<div id="question-result" uk-modal="esc-close: false; bg-close: false;">
+  <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Respuesta</h2>
+      <p>{{ question.explanation }}</p>
+      <p class="uk-text-right">
+          <a class="link-style-a" href='{{ path('questions') }}'>Continuar</a>
+      </p>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% for user in users %}
+
+<a href="#modal-usercard-{{ user.id }}" uk-toggle uk-tooltip="{{ user.email }}">
+
+  <div class="user-card-admin uk-background-default uk-border-rounded uk-padding-small uk-margin uk-box-shadow-hover-medium">
+
+    <h4><span class="uk-margin-small-right uk-icon" uk-icon="icon: user;"></span>{{ user.username }}</h4>
+
+    <p>
+    {% if user.roles[0] == "ROLE_ADMIN" %}
+    <span class="uk-margin-small-right uk-icon" uk-icon="icon: bolt;"></span>Administrador
+    {% elseif user.roles[0] == "ROLE_USER" %}
+    <span class="uk-margin-small-right uk-icon" uk-icon="icon: star;"></span>Usuario
+    {% elseif user.roles[0] == "ROLE_CONTRIBUTOR" %}
+    <span class="uk-margin-small-right uk-icon" uk-icon="icon: pencil;"></span>Contribuidor
+    {% endif %}
+    </p>
+  </div>
+
+</a>
+
+<div id="modal-usercard-{{ user.id }}" class="uk-flex-top" uk-modal>
+  <div class="uk-modal-dialog uk-overflow-hidden">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">{{ user.username|capitalize }} | {{ user.score }} Puntos</h2>
+        </div>
+
+        <div class="uk-modal-body" uk-overflow-auto>
+
+              <h4>Últimas Preguntas Respondidas</h4>
+              <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
+                {% include 'frontend/components/userquestionchoiceb.html.twig' with ({'questions' :  user.userquestionchoices }) %}
+              </div>
+
+        </div>
+
+        <div class="uk-modal-footer uk-text-right">
+            <a class="link-style-a uk-modal-close">Vale!</a>
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}

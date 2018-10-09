@@ -1,0 +1,25 @@
+
+           <div class="slide-up-appear question-container uk-margin-small uk-background-cover" data-src="{{ asset('uploads/covers/' ~ question.cover) }}" uk-img>
+       <div class="question">
+           <p>¿{{ question.question }}?</p>
+               </div>
+               <div class="reward-points score-anim">
+                  <p>{{ question.rewards }} puntos</p>
+               </div>
+  </div>
+       <div class="answer-container uk-grid-small uk-child-width-1-2" uk-grid>
+
+              {% for answer in question.questionchoices|shuffle %}
+
+              <div class="slide-up-appear"><div class="question-choice" data-points="{{ question.rewards }}" data-questionid="{{ question.id }}" {% if answer.isrightchoice %} data-isright="true" {% else %} data-isright="false" {% endif %}>
+                {{ answer.choice }}
+              </div></div>
+
+              {% endfor %}
+
+     </div>
+
+     <div>
+
+
+     </div>

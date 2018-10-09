@@ -1,0 +1,196 @@
+{% extends 'frontend/base.html.twig' %}
+
+{% block title %} {{ title }} {% endblock %}
+
+
+
+{% block content %}
+
+<div class="uk-section">
+
+  <div class="uk-container">
+
+<div class="uk-width-medium uk-margin-auto uk-text-center" >
+
+    <div class="uk-padding">
+       <img src="{{ asset('assets/components/logo-final.png') }}" class="logo-anim" uk-img alt="">
+    </div>
+
+    <div >
+      <div class="uk-text-center">
+
+        <a href="#modal-signin" uk-toggle class="link-style-a uk-display-block uk-margin-bottom">Iniciar Sesión</a>
+        <a href="#modal-signup" uk-toggle class="link-style-c uk-display-block">Crear Cuenta</a>
+
+      </div>
+    </div>
+</div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block modal %}
+
+<div id="modal-signin" class="uk-flex-top" uk-modal>
+ <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+     <button class="uk-modal-close-default" type="button" uk-close></button>
+
+     <div class="uk-flex uk-flex-middle uk-text-center uk-flex-center">
+
+       <form class="uk-width-1-1">
+
+         <div class="uk-margin ">
+           <h1>Iniciar Sesión</h1>
+         </div>
+
+     <div class="uk-margin">
+         <div class="uk-inline  uk-width-1-1">
+             <span class="uk-form-icon" uk-icon="icon: user"></span>
+             <input class="uk-input" type="text" placeholder="Usuario">
+         </div>
+     </div>
+
+     <div class="uk-margin">
+         <div class="uk-inline  uk-width-1-1">
+             <span class="uk-form-icon" uk-icon="icon: lock"></span>
+             <input class="uk-input" type="password" placeholder="Contraseña">
+         </div>
+     </div>
+
+     <div class="uk-margin uk-text-center">
+       <a href="" class="link-style-a">Entrar <span class="uk-icon uk-margin-small-left" uk-icon="icon: arrow-right"></span> </a>
+     </div>
+
+ </form>
+
+
+     </div>
+
+ </div>
+</div>
+
+<div id="modal-signup" class="uk-flex-top" uk-modal>
+ <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+
+     <button class="uk-modal-close-default" type="button" uk-close></button>
+
+     <div class="uk-flex uk-flex-middle uk-text-center uk-flex-center">
+
+       <form id="signupform" class="uk-width-1-1">
+
+         <div class="uk-margin ">
+           <h1>Crear Usuario</h1>
+         </div>
+
+        {# <div class="uk-margin">
+             <div class="uk-inline  uk-width-1-1">
+                 <span class="uk-form-icon" uk-icon="icon: pencil"></span>
+                 <input class="uk-input" type="password" placeholder="Nombres">
+             </div>
+         </div> #}
+
+         <div class="uk-margin">
+             <div uk-form-custom="target: > * > span:last-child">
+                 <select name="role">
+                     <option value="ROLE_ADMIN">Administrador</option>
+                     <option value="ROLE_CONTRIBUTOR">Contribuidor</option>
+                     <option value="3">Anunciante</option>
+                     <option value="ROLE_USER" selected>Usuario</option>
+                 </select>
+                 <span class=" link-style-a">
+
+                     <span></span>
+                 </span>
+             </div>
+         </div>
+
+     <div class="uk-margin">
+         <div class="uk-inline  uk-width-1-1">
+             <span class="uk-form-icon" uk-icon="icon: user"></span>
+             <input name="username" class="uk-input" type="text" placeholder="Usuario">
+         </div>
+     </div>
+
+     <div class="uk-margin">
+         <div class="uk-inline  uk-width-1-1">
+             <span class="uk-form-icon" uk-icon="icon: lock"></span>
+             <input name="password" class="uk-input" type="password" placeholder="Contraseña">
+         </div>
+     </div>
+
+     <div class="uk-margin">
+         <div class="uk-inline  uk-width-1-1">
+             <span class="uk-form-icon" uk-icon="icon: mail"></span>
+             <input name="email" class="uk-input" type="email" placeholder="Email">
+         </div>
+     </div>
+
+     <div class="uk-margin uk-text-center">
+       <a id="signup-user" class="link-style-a">Crear Cuenta<span class="uk-icon uk-margin-small-left" uk-icon="icon: arrow-right"></span> </a>
+     </div>
+
+ </form>
+
+
+     </div>
+
+ </div>
+</div>
+
+
+<script>
+
+//Ajax Functions
+
+
+$('#signup-user').click(function(){
+
+    var userData = JSON.stringify($('#signupform').serializeArray());
+
+    $.ajax({
+       type: 'post',
+       url: '{{ path('createuser') }}',
+       dataType: "json",
+      data: {
+         "userdata" : userData
+       },
+       async: true,
+       success: function(data) {
+
+          console.log(data.data);
+
+          UIkit.notification({
+            message: 'Usuario creado satisfactoriamente',
+            status: 'success',
+            pos: 'top-center',
+            timeout: 2000
+         });
+
+         windows.document.location = '{{ path('home') }}';
+
+       },
+       error: function(){
+
+         UIkit.notification({
+           message: 'Hubo un error al intentar crear el usuario',
+           status: 'danger',
+           pos: 'top-center',
+           timeout: 2000
+        });
+
+       }
+
+
+     });
+
+});
+
+</script>
+
+
+
+
+{% endblock %}

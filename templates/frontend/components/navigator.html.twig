@@ -1,0 +1,47 @@
+<nav id="mainnav" style="height: 50px;" class="uk-navbar-container uk-margin uk-navbar-transparent" uk-navbar>
+    <div class="uk-navbar-left">
+
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="{{ path('questions') }}" class="uk-padding-remove"><img uk-img width="40px" src="{{ asset('assets/components/logo-final.png') }}" alt=""></a></li>
+        </ul>
+
+    </div>
+
+<div class="uk-navbar-center">
+  <div class="uk-navbar-item">
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="" class="link-style-c">
+     Administrador
+    </a>
+     {% elseif is_granted('ROLE_CONTRIBUTOR') %}
+     <a href="" class="link-style-c">
+      Contribuidor
+     </a>
+ {% endif %}
+
+</div>
+</div>
+
+    <div class="uk-navbar-right">
+
+
+
+        <ul class="uk-navbar-nav">
+            <li>
+                <a href="#"  class="uk-padding-remove">
+               <span class="uk-margin-small-right">
+ {{ app.user.username | capitalize }}
+                </span>
+                 <img class="uk-border-circle" width="30px" src="{{ asset('https://getuikit.com/docs/images/avatar.jpg') }}" alt=""></a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="{{ path('user_profile') }}"><span class="uk-icon uk-margin-small-right" uk-icon="icon: user"></span>Mi Perfil</a></li>
+                        <li class="uk-nav-divider"></li>
+                        <li><a href="{{ path('logout') }}"> <span class="uk-icon uk-margin-small-right" uk-icon="icon: sign-out"></span> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
